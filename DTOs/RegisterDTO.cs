@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Snap_n_go.DTOs
+{
+    public class RegisterDTO
+    {
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Email { get; set; }
+        public string Dob { get; set; }
+        public string Password { get; set; }
+    }
+}
