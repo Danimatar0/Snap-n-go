@@ -17,6 +17,7 @@ namespace Snap_n_go.Models
         public User User { get; set; }
         public int Isdeleted { get; set; }
         public string Address { get; set; }
+        public string imgUrl { get; set; }
 
     }
 }

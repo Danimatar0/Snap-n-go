@@ -114,6 +114,7 @@ namespace Snap_n_go.Controllers
             else
             {
                 var stock = _stockRepository.GetStockById(id);
+                Console.WriteLine("stock in controller " + stock);
                  _stockRepository.Delete(stock);
                 return Ok(new
                 {

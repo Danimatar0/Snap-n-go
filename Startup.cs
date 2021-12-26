@@ -102,8 +102,9 @@ namespace Snap_n_go
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors(options => options 
-                .WithOrigins( new[] { "http://localhost:4200" })
+            app.UseCors(options => options
+                //.WithOrigins( new[] { "http://localhost:1234" })
+                .SetIsOriginAllowed(origin => true)
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()

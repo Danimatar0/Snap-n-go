@@ -36,13 +36,18 @@ namespace Snap_n_go.Data
 
         public List<StockProduct> GetAllStockProducts() //done
         {
-            return _dbContext.StockProducts.ToList();
+            return _dbContext.StockProducts
+                .Include(sp => sp.Product)
+                .Include(sp => sp.Stock)
+                .ToList();
         }
 
         public StockProduct GetStockProductById(int id) //done
         {
             return _dbContext.StockProducts
                 .Where(sp => sp.Id == id)
+                .Include(sp => sp.Product)
+                .Include(sp => sp.Stock)
                 .FirstOrDefault();
         }
 
@@ -50,6 +55,8 @@ namespace Snap_n_go.Data
         {
             return _dbContext.StockProducts
                     .Where(sp => sp.Stock.Name.Equals(name))
+                    .Include(sp => sp.Product)
+                    .Include(sp => sp.Stock)
                     .ToList();
         }
 
@@ -58,6 +65,7 @@ namespace Snap_n_go.Data
             return _dbContext.StockProducts
                 .Where(sp => sp.ProductId == productId)
                 .Include(sp => sp.Product)
+                .Include(sp => sp.Stock)
                 .ToList();
         }
 
@@ -75,6 +83,7 @@ namespace Snap_n_go.Data
             return _dbContext.StockProducts
             .Where(sp => sp.StockId == stockid)
             .Include(sp=>sp.Stock)
+            .Include(sp=>sp.Product)
             .ToList();
         }
 

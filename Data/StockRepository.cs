@@ -17,24 +17,29 @@ namespace Snap_n_go.Data
 
         public List<Stock> GetAllStocks() //done
         {
-            return _dbContext.stocks
+            var stocks = _dbContext.stocks
                 .Include(s => s.User)
                 .ToList();
+            Console.WriteLine("stocks -->" + stocks);
+            return stocks;
         }
 
-        public Stock GetStockById(int id) //done by commenting list of stocks in user model
+        public Stock GetStockById(int id) //done 
         {
             if (id == null) return null;
             return _dbContext.stocks
                 .Where(s => s.Id == id)
-                .Include(s=>s.User)
+                //.Include(s=>s.User)
+                .Include(s => s.StockProducts)
                 .FirstOrDefault();
         }
         public List<Stock> GetStockByUserId(int userId) //done
         {
             if (userId == null) return null;
             return _dbContext.stocks
-                .Where(s => s.UserId == userId).ToList();
+                .Where(s => s.UserId == userId)
+                .Include(s => s.StockProducts)
+                .ToList();
         }
 
         public Stock GetStockByName(string name) //done
@@ -43,6 +48,7 @@ namespace Snap_n_go.Data
             return _dbContext.stocks
                 .Where(s => s.Name == name)
                 .Include(s => s.StockProducts)
+                //.Include(s => s.User)
                 .FirstOrDefault();
         }
         public Stock Create(Stock stock) //done
@@ -61,8 +67,9 @@ namespace Snap_n_go.Data
 
         public void Delete(Stock stock) //done
         {
+            Console.WriteLine("stock in repo " + stock);
             _dbContext.stocks.Remove(stock);
-            _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
             Console.WriteLine("Stock having name "+ stock.Name+" successfully deleted..");
         }
 
