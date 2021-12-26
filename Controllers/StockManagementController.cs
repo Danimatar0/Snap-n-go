@@ -61,6 +61,19 @@ namespace Snap_n_go.Controllers
                 return NotFound();
             }
         }
+        // GET api/<StockManagementController>/5
+        [HttpGet("product/barcode/{barcode}")]
+        public IActionResult GetByProductBarcode(long barcode)
+        {
+            try
+            {
+                return Ok(_stockProductRepository.GetStockProductByBarcode(barcode));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
 
         // POST api/<StockManagementController>
         [HttpPost]

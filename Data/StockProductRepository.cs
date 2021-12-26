@@ -38,6 +38,7 @@ namespace Snap_n_go.Data
         {
             return _dbContext.StockProducts
                 .Include(sp => sp.Product)
+                .ThenInclude(p=>p.Category)
                 .Include(sp => sp.Stock)
                 .ToList();
         }
@@ -47,6 +48,7 @@ namespace Snap_n_go.Data
             return _dbContext.StockProducts
                 .Where(sp => sp.Id == id)
                 .Include(sp => sp.Product)
+                .ThenInclude(p => p.Category)
                 .Include(sp => sp.Stock)
                 .FirstOrDefault();
         }
@@ -56,6 +58,7 @@ namespace Snap_n_go.Data
             return _dbContext.StockProducts
                     .Where(sp => sp.Stock.Name.Equals(name))
                     .Include(sp => sp.Product)
+                    .ThenInclude(p => p.Category)
                     .Include(sp => sp.Stock)
                     .ToList();
         }
@@ -65,6 +68,7 @@ namespace Snap_n_go.Data
             return _dbContext.StockProducts
                 .Where(sp => sp.ProductId == productId)
                 .Include(sp => sp.Product)
+                .ThenInclude(p => p.Category)
                 .Include(sp => sp.Stock)
                 .ToList();
         }
@@ -84,6 +88,7 @@ namespace Snap_n_go.Data
             .Where(sp => sp.StockId == stockid)
             .Include(sp=>sp.Stock)
             .Include(sp=>sp.Product)
+            .ThenInclude(p => p.Category)
             .ToList();
         }
 
@@ -91,6 +96,9 @@ namespace Snap_n_go.Data
         {
             return _dbContext.StockProducts
                 .Where(sp=>sp.Product.Name.Equals(name))
+                .Include(sp=>sp.Stock)
+                .Include(sp=>sp.Product)
+                .ThenInclude(p => p.Category)
                 .ToList();
         }
 
@@ -102,6 +110,15 @@ namespace Snap_n_go.Data
         public List<Stock> GetStocksByProductId(int pId)
         {
             throw new NotImplementedException();
+        }
+
+        public List<StockProduct> GetStockProductByBarcode(long barcode)
+        {
+            var product = _dbContext.products
+                .Where(p => p.Barcode == barcode)
+                .FirstOrDefault();
+            var sps = GetStockProductByProductId(product.Id);
+            return sps;
         }
     }
 }

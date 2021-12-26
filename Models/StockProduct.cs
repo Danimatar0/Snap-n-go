@@ -21,6 +21,8 @@ namespace Snap_n_go.Models
 
         public Product Product { get; set; }
         public double Quantity { get; set; }
+        public string ExpiryDate { get; set; }
+
         public int Isdeleted { get; set; }
 
     }

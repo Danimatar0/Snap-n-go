@@ -35,11 +35,13 @@ namespace Snap_n_go.Data
             return _dbContext.products.ToList();
         }
 
-        public Product GetProductByBarcode(int barcode)
+        public Product GetProductByBarcode(long barcode)
         {
-            return _dbContext.products
-                .Where(s=>s.barcode == barcode)
+            var product= _dbContext.products
+                .Where(p=>p.Barcode == barcode)
                 .FirstOrDefault();
+            Console.WriteLine("product: " + product.Name);
+            return product;
         }
 
         public Product GetProductById(int id)

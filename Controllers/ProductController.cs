@@ -21,7 +21,7 @@ namespace Snap_n_go.Controllers
             _productRepository = productRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace Snap_n_go.Controllers
 
         //GET api/<ProductController>/5   
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public IActionResult Get(int id)
         {
             try
             {
@@ -48,11 +48,11 @@ namespace Snap_n_go.Controllers
         }
 
         [HttpGet("barcode/{barcode}")]
-        public async Task<IActionResult> GetProductByBarcode(int barcode)
+        public IActionResult GetProductByBarcode(long barcode)
         {
             try
             {
-                return Ok(_productRepository.GetProductById(barcode));
+                return Ok(_productRepository.GetProductByBarcode(barcode));
             }
             catch
             {
@@ -61,7 +61,7 @@ namespace Snap_n_go.Controllers
         }
         // POST api/<ProductController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Product product)
+        public IActionResult Post([FromBody] Product product)
         {
             if (product != null)
             {
@@ -81,7 +81,7 @@ namespace Snap_n_go.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Product product)
+        public IActionResult Put(int id, [FromBody] Product product)
         {
             if (product != null)
             {
@@ -101,8 +101,22 @@ namespace Snap_n_go.Controllers
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var prod = _productRepository.GetProductById(id);
+            if(prod != null)
+            {
+                _productRepository.Delete(prod);
+                return Ok(new
+                {
+                    statusCode = 200,
+                    message = "Success"
+                });
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

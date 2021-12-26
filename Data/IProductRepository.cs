@@ -11,8 +11,9 @@ namespace Snap_n_go.Data
         List<Product> GetAllProducts();
         Product GetProductById(int id);
         List<Product> GetProductsByStockId(int stockId);
-        Product GetProductByBarcode(int barcode);
         Product GetProductByName(string name);
+        Product GetProductByBarcode(long barcode);
+
         Product Create(Product product);
         Product Edit(Product product);
         void Delete(Product product);

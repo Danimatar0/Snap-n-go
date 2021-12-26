@@ -16,9 +16,8 @@ namespace Snap_n_go.Models
         public int CategoryId { get; set; }
         public  List<StockProduct> StockProducts { get; set; }
         public int Isdeleted { get; set; }
-        public string imgUrl { get; set; }
-        public string expiryDate { get; set; }
-        public int barcode { get; set; }
+        public string ImgUrl { get; set; }
+        public long Barcode { get; set; }
 
     }
 }
