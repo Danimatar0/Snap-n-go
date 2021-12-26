@@ -68,11 +68,11 @@ namespace Snap_n_go.Controllers
         // POST api/<StockController>
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Stock stock)   //done
+        public async Task<IActionResult> Create( Stock stock,int uId)   //done
         {
             if(stock != null)
             {
-                _stockRepository.Create(stock);
+                _stockRepository.Create(stock, uId);
                 return Ok(new {
                     statusCode = 200,
                     message = "Success",

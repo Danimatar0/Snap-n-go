@@ -82,16 +82,17 @@ namespace Snap_n_go.Controllers
         }
 
         [HttpGet("user")]
-        public IActionResult User()
+        public IActionResult User(string jwtString)
         {
 
             try
             {
-                var jwtString = Request.Cookies["token"];
+                //var jwtString = Request.Cookies["token"];
+
                 var token = _jwtService.Verify(jwtString);
                 int userId = int.Parse(token.Issuer);
                 var user = _repository.getById(userId);
-                Console.WriteLine("Retrieved user:" + user);
+                Console.WriteLine("Retrieved user:" + user.Email);
                 return Ok(user);
             } catch (Exception e)
             {

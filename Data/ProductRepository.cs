@@ -15,7 +15,9 @@ namespace Snap_n_go.Data
         }
         public Product Create(Product product)
         {
-            throw new NotImplementedException();
+           _dbContext.products.Add(product);
+            product.Id=_dbContext.SaveChanges();
+            return product;
         }
 
         public void Delete(Product product)
@@ -33,14 +35,23 @@ namespace Snap_n_go.Data
             return _dbContext.products.ToList();
         }
 
+        public Product GetProductByBarcode(int barcode)
+        {
+            return _dbContext.products
+                .Where(s=>s.barcode == barcode)
+                .FirstOrDefault();
+        }
+
         public Product GetProductById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.products.Find(id);
         }
 
         public Product GetProductByName(string name)
         {
-            throw new NotImplementedException();
+            return _dbContext.products
+                .Where(p=>p.Name.Equals(name))
+                .FirstOrDefault();
         }
 
         public List<Product> GetProductByStockId(int stockId)

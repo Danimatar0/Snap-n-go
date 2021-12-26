@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Snap_n_go.Data;
+using Snap_n_go.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,29 +15,88 @@ namespace Snap_n_go.Controllers
     public class ProductController : ControllerBase
     {
         // GET: api/<ProductController>
+        private readonly IProductRepository _productRepository;
+        public ProductController(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_productRepository.GetAllProducts());
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
-        // GET api/<ProductController>/5
+        //GET api/<ProductController>/5   
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                return Ok(_productRepository.GetProductById(id));
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
+        [HttpGet("barcode/{barcode}")]
+        public async Task<IActionResult> GetProductByBarcode(int barcode)
+        {
+            try
+            {
+                return Ok(_productRepository.GetProductById(barcode));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
         // POST api/<ProductController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Product product)
         {
+            if (product != null)
+            {
+                _productRepository.Create(product);
+                return Ok(new
+                {
+                    statusCode = 200,
+                    message = "Success",
+                });
+            }
+
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Product product)
         {
+            if (product != null)
+            {
+                _productRepository.Edit(product);
+                return Ok(new
+                {
+                    statusCode = 200,
+                    message = "Success",
+                });
+            }
+
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<ProductController>/5

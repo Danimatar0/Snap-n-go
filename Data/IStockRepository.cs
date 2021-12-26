@@ -12,7 +12,7 @@ namespace Snap_n_go.Data
         Stock GetStockById(int id);
         List<Stock> GetStockByUserId(int userId);
         Stock GetStockByName(string name);
-        Stock Create(Stock stock);
+        Stock Create(Stock stock,int uId);
         Stock Edit(Stock stock);
         void Delete(Stock stock);
     }

@@ -38,7 +38,7 @@ namespace Snap_n_go.Data
             if (userId == null) return null;
             return _dbContext.stocks
                 .Where(s => s.UserId == userId)
-                .Include(s => s.StockProducts)
+                //.Include(s => s.Stocks)
                 .ToList();
         }
 
@@ -51,8 +51,9 @@ namespace Snap_n_go.Data
                 //.Include(s => s.User)
                 .FirstOrDefault();
         }
-        public Stock Create(Stock stock) //done
+        public Stock Create(Stock stock,int userId) //done
         {
+            stock.UserId = userId;
             _dbContext.stocks.Add(stock);
             stock.Id = _dbContext.SaveChanges();
             return stock;
